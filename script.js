@@ -1,22 +1,18 @@
 /* =========================================================
    BHARGAV DIGITAL SEVA
    Main JavaScript
-   ========================================================= */
+========================================================= */
 
 
-/* =========================================================
-   MOBILE MENU
-   ========================================================= */
+/* ================= MOBILE MENU ================= */
 
 const menuBtn = document.getElementById("menuBtn");
-const navbar = document.getElementById("navbar");
+const nav = document.getElementById("nav");
 
-if (menuBtn && navbar) {
+if (menuBtn && nav) {
 
-    menuBtn.addEventListener("click", () => {
-
-        navbar.classList.toggle("show");
-
+    menuBtn.addEventListener("click", function () {
+        nav.classList.toggle("open");
     });
 
 }
@@ -24,50 +20,14 @@ if (menuBtn && navbar) {
 
 /* Close mobile menu after clicking a link */
 
-document.querySelectorAll(".nav-link").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        if (navbar) {
-            navbar.classList.remove("show");
-        }
-
-    });
-
-});
-
-
-/* =========================================================
-   ACTIVE NAVIGATION
-   ========================================================= */
-
-const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav-link");
 
-window.addEventListener("scroll", () => {
+navLinks.forEach(function (link) {
 
-    let current = "";
+    link.addEventListener("click", function () {
 
-    sections.forEach(section => {
-
-        const sectionTop = section.offsetTop - 120;
-        const sectionHeight = section.offsetHeight;
-
-        if (
-            window.scrollY >= sectionTop &&
-            window.scrollY < sectionTop + sectionHeight
-        ) {
-            current = section.getAttribute("id");
-        }
-
-    });
-
-    navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-        if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
+        if (nav) {
+            nav.classList.remove("open");
         }
 
     });
@@ -75,73 +35,116 @@ window.addEventListener("scroll", () => {
 });
 
 
-/* =========================================================
-   SERVICE SEARCH
-   ========================================================= */
+/* ================= ACTIVE NAVIGATION ================= */
 
-const searchInput = document.getElementById("serviceSearch");
+navLinks.forEach(function (link) {
+
+    link.addEventListener("click", function () {
+
+        navLinks.forEach(function (item) {
+            item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+    });
+
+});
+
+
+/* ================= SERVICE SEARCH ================= */
+
+const serviceSearch = document.getElementById("serviceSearch");
 const serviceCards = document.querySelectorAll(".service-card");
+const noResults = document.getElementById("noResults");
 
-if (searchInput) {
+if (serviceSearch) {
 
-    searchInput.addEventListener("input", () => {
+    serviceSearch.addEventListener("input", function () {
 
-        const searchTerm = searchInput.value
-            .toLowerCase()
-            .trim();
+        const searchText = this.value.toLowerCase().trim();
 
-        serviceCards.forEach(card => {
+        let visibleCards = 0;
 
-            const cardText = card.innerText.toLowerCase();
+        serviceCards.forEach(function (card) {
 
-            if (cardText.includes(searchTerm)) {
+            const serviceName =
+                card.querySelector("h3").textContent.toLowerCase();
 
-                card.classList.remove("hidden");
+            const serviceDescription =
+                card.querySelector("p").textContent.toLowerCase();
+
+            const serviceData =
+                card.getAttribute("data-service") || "";
+
+            const matches =
+                serviceName.includes(searchText) ||
+                serviceDescription.includes(searchText) ||
+                serviceData.includes(searchText);
+
+            if (matches) {
+
+                card.style.display = "";
+
+                visibleCards++;
 
             } else {
 
-                card.classList.add("hidden");
+                card.style.display = "none";
 
             }
 
         });
 
-    });
 
-}
+        if (noResults) {
 
+            if (visibleCards === 0 && searchText !== "") {
 
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
+                noResults.style.display = "block";
 
-const yearElement = document.getElementById("year");
+            } else {
 
-if (yearElement) {
+                noResults.style.display = "none";
 
-    yearElement.textContent = new Date().getFullYear();
-
-}
-
-
-/* =========================================================
-   SMOOTH BUTTON FEEDBACK
-   ========================================================= */
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-
-    link.addEventListener("click", function () {
-
-        const target = document.querySelector(this.getAttribute("href"));
-
-        if (target) {
-
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
+            }
 
         }
 
     });
+
+}
+
+
+/* ================= CURRENT YEAR ================= */
+
+const currentYear = document.getElementById("currentYear");
+
+if (currentYear) {
+
+    currentYear.textContent = new Date().getFullYear();
+
+}
+
+
+/* ================= CLOSE MENU ON OUTSIDE CLICK ================= */
+
+document.addEventListener("click", function (event) {
+
+    if (!nav || !menuBtn) {
+        return;
+    }
+
+    const clickedInsideMenu =
+        nav.contains(event.target);
+
+    const clickedMenuButton =
+        menuBtn.contains(event.target);
+
+    if (!clickedInsideMenu && !clickedMenuButton) {
+
+        nav.classList.remove("open");
+
+    }
 
 });
