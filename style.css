@@ -1,6 +1,5 @@
 /* =========================================================
    BHARGAV DIGITAL SEVA
-   Main Stylesheet
    ========================================================= */
 
 * {
@@ -159,6 +158,10 @@ input {
     gap: 60px;
 }
 
+.hero-content {
+    min-width: 0;
+}
+
 .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -183,13 +186,20 @@ input {
     font-size: 11px;
 }
 
-.hero h1 {
+
+/* =========================================================
+   HERO HEADING
+   ========================================================= */
+
+.hero-title {
     margin-bottom: 23px;
+    text-align: center;
 }
 
 .hero-title .title-main {
     display: block;
-    font-size: clamp(45px, 5vw, 67px);
+    white-space: nowrap;
+    font-size: clamp(42px, 5vw, 67px);
     line-height: 1.05;
     letter-spacing: -2px;
     color: #101d38;
@@ -199,16 +209,17 @@ input {
 .hero-title .title-sub {
     display: block;
     text-align: center;
-    font-size: clamp(28px, 3vw, 40px);
+    font-size: clamp(27px, 3vw, 40px);
     line-height: 1.15;
     color: #101d38;
     font-weight: 700;
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .hero-title .title-services {
     display: block;
-    font-size: clamp(35px, 4vw, 52px);
+    text-align: center;
+    font-size: clamp(34px, 4vw, 52px);
     line-height: 1.1;
     color: #1456d9;
     font-weight: 800;
@@ -217,13 +228,15 @@ input {
 
 .hero-content > p {
     max-width: 590px;
+    margin: 0 auto 30px;
+    text-align: center;
     color: #657189;
     font-size: 17px;
-    margin-bottom: 30px;
 }
 
 .hero-buttons {
     display: flex;
+    justify-content: center;
     gap: 13px;
     flex-wrap: wrap;
 }
@@ -267,6 +280,7 @@ input {
 
 .hero-contact {
     display: flex;
+    justify-content: center;
     gap: 28px;
     margin-top: 40px;
     flex-wrap: wrap;
@@ -301,7 +315,9 @@ input {
 }
 
 
-/* Hero Card */
+/* =========================================================
+   HERO CARD
+   ========================================================= */
 
 .hero-card-wrapper {
     min-height: 440px;
@@ -900,7 +916,7 @@ input {
 
 
 /* =========================================================
-   SEARCH HIDDEN CARDS
+   SEARCH
    ========================================================= */
 
 .service-card.hidden {
@@ -960,7 +976,6 @@ input {
     .contact-grid {
         grid-template-columns: 1fr 1fr;
     }
-
 }
 
 
@@ -1006,8 +1021,21 @@ input {
         padding: 65px 0 75px;
     }
 
-    .hero h1 {
-        font-size: 43px;
+    .hero-title .title-main {
+        font-size: 39px;
+        letter-spacing: -1.5px;
+    }
+
+    .hero-title .title-sub {
+        font-size: 27px;
+    }
+
+    .hero-title .title-services {
+        font-size: 34px;
+    }
+
+    .hero-content > p {
+        font-size: 15px;
     }
 
     .hero-card {
@@ -1074,19 +1102,21 @@ input {
     .footer-brand {
         grid-column: 1 / -1;
     }
-
 }
 
 
 @media (max-width: 480px) {
 
-    .hero h1 {
-        font-size: 38px;
-        letter-spacing: -1px;
+    .hero-title .title-main {
+        font-size: 34px;
     }
 
-    .hero-content > p {
-        font-size: 15px;
+    .hero-title .title-sub {
+        font-size: 24px;
+    }
+
+    .hero-title .title-services {
+        font-size: 31px;
     }
 
     .hero-buttons .btn {
@@ -1119,5 +1149,4 @@ input {
     .footer-container {
         grid-template-columns: 1fr;
     }
-
 }
